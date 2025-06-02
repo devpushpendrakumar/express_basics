@@ -1,0 +1,12 @@
+[
+  { "id": 1, "name": "Aarav Sharma", "age": 15 },
+  { "id": 2, "name": "Ishita Verma", "age": 14 },
+  { "id": 3, "name": "Rohan Patel", "age": 16 },
+  { "id": 4, "name": "Sneha Mehra", "age": 13 },
+  { "id": 5, "name": "Aditya Singh", "age": 15 },
+  { "id": 6, "name": "Pooja Nair", "age": 17 },
+  { "id": 7, "name": "Kunal Joshi", "age": 14 },
+  { "id": 8, "name": "Meera Das", "age": 15 },
+  { "id": 9, "name": "Yash Thakur", "age": 16 },
+  { "id": 10, "name": "Ananya Roy", "age": 13 }
+]
