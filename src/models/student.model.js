@@ -1,24 +1,25 @@
-import sequelize from "../db/db.js";
+import { DataTypes } from "sequelize";
+import sequelize from "../db/db.js"; // ✅ this is your shared, configured instance
 
 const Student = sequelize.define(
   "Student",
   {
     id: {
-      type: sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     name: {
-      type: sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     email: {
-      type: sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
     age: {
-      type: sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
@@ -27,4 +28,5 @@ const Student = sequelize.define(
     timestamps: true,
   }
 );
+
 export default Student;

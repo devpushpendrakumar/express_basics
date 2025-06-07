@@ -1,4 +1,4 @@
-import pool from "../db/db.js";
+import Student from "../models/student.model.js";
 import apiResponse from "../utils/apiResponse.js";
 import apiError from "../utils/apiError.js";
 
@@ -24,24 +24,23 @@ const getAllStudents = async (req, res, next) => {
 
 const createStudent = async (req, res, next) => {
   try {
-    console.log(req.body, "HELLLOOOOOOO");
-
     if (!req.body.name || !req.body.email || !req.body.age) {
       return next(new apiError(400, "Name, email, and age are required"));
     }
     const { name, email, age } = req.body;
 
-    const queryString = `INSERT INTO students (name, email, age) VALUES (?, ?, ?)`;
-    const [result] = await pool.query(queryString, [name, email, age]);
+    let newStudent = await Student.create({
+      name,
+      email,
+      age,
+    });
 
-    const [user] = await pool.query("SELECT * FROM students WHERE id = ?", [
-      result.insertId,
-    ]);
+    newStudent = newStudent.toJSON();
 
-    apiResponse(res, {
+    const student = apiResponse(res, {
       statusCode: 201,
       message: "Student created successfully",
-      data: user[0],
+      data: newStudent,
     });
   } catch (err) {
     if (err.code === "ER_DUP_ENTRY") {

@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
-import sequelize from "./db/db.js";
 dotenv.config();
+
+import sequelize from "./db/db.js";
+import "./models/student.model.js";
+
 import app from "./app.js";
-import { Sequelize } from "sequelize";
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,7 +12,7 @@ const start = async () => {
   try {
     // Test database connection
     await sequelize.authenticate();
-    console.log("Database connected successfuly");
+    console.log("Database connected successfully");
 
     // Sync all models with the database
     await sequelize.sync({ force: true });
@@ -25,5 +27,4 @@ const start = async () => {
   }
 };
 
-// Start the server
 start();
