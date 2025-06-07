@@ -24,10 +24,15 @@ const getAllStudents = async (req, res, next) => {
 
 const createStudent = async (req, res, next) => {
   try {
+    console.log(req.body, "HELLLOOOOOOO");
+
+    if (!req.body.name || !req.body.email || !req.body.age) {
+      return next(new apiError(400, "Name, email, and age are required"));
+    }
     const { name, email, age } = req.body;
 
     const queryString = `INSERT INTO students (name, email, age) VALUES (?, ?, ?)`;
-    const [result] = await pool.query(queryString, [name, email]);
+    const [result] = await pool.query(queryString, [name, email, age]);
 
     const [user] = await pool.query("SELECT * FROM students WHERE id = ?", [
       result.insertId,
@@ -74,7 +79,7 @@ const updateStudent = async (req, res, next) => {
     const { id } = req.params;
     const { name, age } = req.body;
 
-    const queryString = `UPDATE students SET name = ? WHERE id = ?`;
+    const queryString = `UPDATE students SET name = ?, age = ? WHERE id = ?`;
     const [result] = await pool.query(queryString, [name, age, id]);
 
     if (result.affectedRows === 0) {
@@ -90,7 +95,7 @@ const updateStudent = async (req, res, next) => {
     apiResponse(res, {
       statusCode: 200,
       message: "Student updated successfully",
-      data: updatedUser[0],
+      data: updatedStudent[0],
     });
   } catch (err) {
     console.error("UpdateStudent Error:", err);

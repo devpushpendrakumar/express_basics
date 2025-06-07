@@ -4,6 +4,7 @@ import router from "./routes/student.routes.js";
 import errorMiddleware from "./middleware/apiErrorResponse.js";
 
 const app = express();
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello, This is home page!");
