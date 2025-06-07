@@ -2,6 +2,9 @@ import express from "express";
 import getUsers from "./controllers/user.controllers.js";
 import router from "./routes/student.routes.js";
 import errorMiddleware from "./middleware/apiErrorResponse.js";
+import Student from "./models/student.model.js";
+
+const StudentModel = new Student();
 
 const app = express();
 app.use(express.json());

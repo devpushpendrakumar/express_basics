@@ -1,15 +1,20 @@
 import dotenv from "dotenv";
-import pool from "./db/db.js";
+import sequelize from "./db/db.js";
 dotenv.config();
 import app from "./app.js";
+import { Sequelize } from "sequelize";
 
 const PORT = process.env.PORT || 3000;
 
 const start = async () => {
   try {
     // Test database connection
-    const [test] = await pool.query("SELECT 1");
+    await sequelize.authenticate();
     console.log("Database connected successfuly");
+
+    // Sync all models with the database
+    await sequelize.sync({ force: true });
+    console.log("All models were synchronized successfully.");
 
     // Start the Express server
     app.listen(PORT, () => {
