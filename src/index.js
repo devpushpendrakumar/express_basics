@@ -15,7 +15,7 @@ const start = async () => {
     console.log("Database connected successfully");
 
     // Sync all models with the database
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false }); // Set force to true only if you want to drop and recreate tables
     console.log("All models were synchronized successfully.");
 
     // Start the Express server

@@ -97,22 +97,28 @@ const updateStudent = async (req, res, next) => {
 };
 
 const deleteStudent = async (req, res, next) => {
-  //   try {
-  //     const { id } = req.params;
-  //     const queryString = `DELETE FROM students WHERE id = ?`;
-  //     const [result] = await pool.query(queryString, [id]);
-  //     if (result.affectedRows === 0) {
-  //       return next(new apiError(404, "Student not found"));
-  //     }
-  //     apiResponse(res, {
-  //       statusCode: 200,
-  //       message: "Student deleted successfully",
-  //       data: { deletedId: id },
-  //     });
-  //   } catch (err) {
-  //     console.error("DeleteStudent Error:", err);
-  //     next(new apiError(500, "Server error: Unable to delete student"));
-  //   }
+  try {
+    const { id } = req.params;
+
+    // Check if student exists
+    const student = await Student.findByPk(id);
+    if (!student) {
+      return next(new apiError(404, "Student not found"));
+    }
+
+    // Delete student
+    await student.destroy();
+
+    // Return confirmation response
+    apiResponse(res, {
+      statusCode: 200,
+      message: "Student deleted successfully",
+      data: { deletedId: id },
+    });
+  } catch (error) {
+    console.error("DeleteStudent Error:", error);
+    next(new apiError(500, "Server error: Unable to delete student"));
+  }
 };
 
 export {
